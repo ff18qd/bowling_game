@@ -1,16 +1,32 @@
 class Api::GamesController < ApplicationController
     
+    def index
+        redirect_to '/index.html'
+    end 
+    
     def create
         render json: {id: new_game.id}, status: 201
     end
     
     def show
         game_hash = {
-          score: 150,
-          score_by_frame: 7,
-         
+          score: game.score,
+          score_by_frame: game.frames,
+          game_over: game.game_over?,
         }
         render json: game_hash, status: 200
+    end
+    
+    def update
+        if game
+          game.throw!(update_params[:knocked_pins].to_i)
+          render json: {}, status: 204
+        else
+          render json: {message: "Game not found."}, status: 404
+        end
+
+        rescue GameError, AvailablePinsError => e
+        render json: {message: e.message}, status: 422
     end
     
     
