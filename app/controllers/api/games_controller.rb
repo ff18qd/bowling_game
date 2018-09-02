@@ -18,7 +18,10 @@ class Api::GamesController < ApplicationController
     end
     
     def update
+        # binding.pry
         if game
+    
+        #   game.throw!(update_params[:knocked_pins].to_i)
           game.throw!(update_params[:knocked_pins].to_i)
           render json: {}, status: 204
         else
@@ -42,7 +45,8 @@ class Api::GamesController < ApplicationController
     
     def update_params
         raise(ActionController::ParameterMissing, "Wrong knocked pins data format. Please input a valid number.") if params[:knocked_pins].to_s.chars.any? {|c| c=~/[^\d]/}
-        params.require(:knocked_pins).permit(:knocked_pins)
+        params.require(:knocked_pins)
+        params.permit(:knocked_pins, :id, :action, :format)
         # params.require(:person).permit(:name, :age)
     end
     

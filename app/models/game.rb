@@ -13,12 +13,13 @@ class Game < ApplicationRecord
     include CachedFindById
     
     def throw!(knocked_pins)
+        # binding.pry
         self.transaction do
           self.lock!
           raise(GameError, "This game is over.") if game_over?
           raise(AvailablePinsError, "Can't knock more pins than available.") unless knocked_pins.between?(0, avaliable_pins)
           frames.last << knocked_pins
-          fill_older_open_frames_with knocked_pins
+          fill_older_open_frames_with(knocked_pins)
           frames << [] if frame_completed?(frames.last) && !game_over?
           save!
         end
@@ -38,19 +39,20 @@ class Game < ApplicationRecord
     end
     
     def strike?(frame)
-        frame[0] === PINS
+        # binding.pry
+        frame[0] == PINS
     end
 
     def double_strike?(frame)
-        frame[0] === PINS && frame[1] === PINS
+        frame[0] == PINS && frame[1] == PINS
     end
     
     def spare?(frame)
-        frame[0] + frame[1] === PINS
+         [frame[0],frame[1]].compact.sum == PINS
     end
     
     def ending_frame?(frame)
-        frames.size === FRAMES && frames.last.equal?(frame)
+        frames.size == FRAMES && frames.last.equal?(frame)
     end
     
     def frame_completed?(frame)
@@ -78,13 +80,31 @@ class Game < ApplicationRecord
     end
     
     def avaliable_pins
+        # binding.pry
         current_frame = frames.last
         current_frame_score = current_frame.to_a.sum
-        if ending_frame?(current_frame)
-          return (PINS*3 - current_frame_score) if double_strike?(current_frame)
-          return (PINS*2 - current_frame_score) if strike?(current_frame) || spare?(current_frame)
+        # if ending_frame?(current_frame)
+        
+        #   return (PINS*3 - current_frame_score) if double_strike?(current_frame)
+        #   return (PINS*2 - current_frame_score) if strike?(current_frame) || spare?(current_frame)
+        # end
+        # PINS - current_frame_score
+        
+        if current_frame.size == 0 
+            PINS
+        elsif current_frame.size == 1 
+            if strike?(current_frame)
+                PINS
+            else PINS - current_frame_score
+            end 
+        elsif current_frame.size == 2
+            if double_strike?(current_frame)
+                PINS
+            elsif strike?(current_frame) || spare?(current_frame)
+                (PINS*2 - current_frame_score)
+            end
         end
-        PINS - current_frame_score
+        
     end
     
 end
