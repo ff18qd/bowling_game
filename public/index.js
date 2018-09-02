@@ -19,7 +19,6 @@ $(function(){
   $("#knocked-pins-form").on("submit", function(e){
     e.preventDefault();
     knocked_pins = $("#knocked-pins").val();
-    // check_score();
     send_knocked_pins(knocked_pins);
   })
 
@@ -76,7 +75,7 @@ $(function(){
   }
 
   function update_error_message(message){
-    if (!message) { message = "Server error 123." }
+    if (!message) { message = "Server error." }
     $("#error-message").text(message);
   }
 

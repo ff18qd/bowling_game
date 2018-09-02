@@ -39,7 +39,6 @@ class Game < ApplicationRecord
     end
     
     def strike?(frame)
-        # binding.pry
         frame[0] == PINS
     end
 
