@@ -11,7 +11,7 @@ class Api::GamesController < ApplicationController
     def show
         game_hash = {
           score: game.score,
-          score_by_frame: game.frames,
+          score_by_frame: game.score_by_frame,
           game_over: game.game_over?,
         }
         render json: game_hash, status: 200
@@ -19,8 +19,6 @@ class Api::GamesController < ApplicationController
     
     def update
         if game
-    
-        #   game.throw!(update_params[:knocked_pins].to_i)
           game.throw!(update_params[:knocked_pins].to_i)
           render json: {}, status: 204
         else
@@ -49,7 +47,6 @@ class Api::GamesController < ApplicationController
         end 
         params.require(:knocked_pins)
         params.permit(:knocked_pins, :id, :action, :format)
-        # params.require(:person).permit(:name, :age)
     end
     
 end

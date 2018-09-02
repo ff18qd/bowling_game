@@ -29,6 +29,14 @@ class Game < ApplicationRecord
         frames.size == FRAMES && frame_completed?(frames.last)
     end
     
+    def score_by_frame
+        frames.map do |frame| 
+            total = 0
+            frame.map {|score| total += score.to_i}
+            total
+        end 
+    end 
+    
     private
     def fill_older_open_frames_with(value)
         frames.map do |frame|
