@@ -1,0 +1,31 @@
+h1 {
+    color: blue;
+    text-align: center
+}
+
+.display {
+    background: lightgrey;
+    width: 30%;
+    margin-left: 35%;
+    margin-right: 35%;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    /*padding: 0 auto 0 auto;*/
+    padding: 3px 10px 5px 5px;
+    
+}
+
+form {
+    text-align: center;
+    width: 30%;
+    margin-left: 35%;
+    margin-right: 35%;
+    
+}
+
+button {
+    text-align: center;
+    width: 20%;
+    margin-left: 40%;
+    margin-right: 40%;
+}

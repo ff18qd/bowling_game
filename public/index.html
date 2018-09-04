@@ -4,6 +4,7 @@
     <title>Bowling Score Board</title>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="index.js"></script>
+    <link rel="stylesheet" href="index.css">
   </head>
   <body>
     <div id="error-message" style="color: red"></div>
@@ -12,13 +13,13 @@
     <h1>Bowling Score Board</h1>
 
     <button id="new-game-but">New Game</button>
-
-    <h3>Current game id: <span id="game-id"></span></h3>
-    <h3>Total score: <span id="game-score"></span></h3>
-    <h3>Score by frame: <span id="game-score-by-frame"></span></h3>
-    <h3>Frame number: <span id="game-frames"></span></h3>
-    <h3>Game over: <span id="game-over"></span></h3>
-    <br/>
+    <div class='display'>
+      <h3>Current game id: <span id="game-id"></span></h3>
+      <h3>Total score: <span id="game-score"></span></h3>
+      <h3>Score by frame: <span id="game-score-by-frame"></span></h3>
+      <h3>Frame number: <span id="game-frames"></span></h3>
+      <h3>Game over: <span id="game-over"></span></h3>
+    </div>
 
     <form id="knocked-pins-form">
       <label for="knocked_pins">Knocked Pins:</label>
