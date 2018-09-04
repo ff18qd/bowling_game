@@ -13,7 +13,6 @@ class Game < ApplicationRecord
     include CachedFindById
     
     def throw!(knocked_pins)
-        # binding.pry
         self.transaction do
           self.lock!
           raise(GameError, "This game is over.") if game_over?
@@ -63,9 +62,6 @@ class Game < ApplicationRecord
     end
     
     def frame_completed?(frame)
-        # return ending_frame_completed?(frame) if ending_frame?(frame)
-        # return true if frame.nil? || frame.size===2 || strike?(frame)
-        # false
         if strike?(frame) || spare?(frame)
             if frame.size === 3
                 return true
@@ -87,16 +83,8 @@ class Game < ApplicationRecord
     end
     
     def avaliable_pins
-        # binding.pry
         current_frame = frames.last
         current_frame_score = current_frame.to_a.sum
-        # if ending_frame?(current_frame)
-        
-        #   return (PINS*3 - current_frame_score) if double_strike?(current_frame)
-        #   return (PINS*2 - current_frame_score) if strike?(current_frame) || spare?(current_frame)
-        # end
-        # PINS - current_frame_score
-        
         if current_frame.size == 0 
             PINS
         elsif current_frame.size == 1 
@@ -111,12 +99,8 @@ class Game < ApplicationRecord
                 (PINS*2 - current_frame_score)
             end
         end
-        
     end
-    
 end
-
-
 
 class GameError < StandardError
 end

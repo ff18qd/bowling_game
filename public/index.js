@@ -22,10 +22,9 @@ $(function(){
     send_knocked_pins(knocked_pins);
   })
 
-//   setInterval(function(){
-//     if (current_game_id) { update_score() }
-//   }, 5000);
-
+  setInterval(function(){
+    if (current_game_id) { update_score() }
+  }, 2000);
 
   function update_current_game_id(id){
     current_game_id = id;
@@ -39,7 +38,12 @@ $(function(){
         $("#game-score").text(data.score);
         $("#game-frames").text(data.score_by_frame.length);
         $("#game-score-by-frame").text(JSON.stringify(data.score_by_frame));
-        $("#game-over").text(data.game_over.toString());
+        // $("#game-over").text(data.game_over.toString());
+        if (data.game_over) 
+          $("#game-over").text("YES")
+        else
+           $("#game-over").text("NO")
+        // $("#game-over").text(data.game_over);
       })
       .error(function(data){
         console.error("Error on requesting GET '"+ api_url_path + current_game_id);

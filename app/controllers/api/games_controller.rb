@@ -19,19 +19,21 @@ class Api::GamesController < ApplicationController
     
     def update
         if game
-          game.throw!(update_params[:knocked_pins].to_i)
-          render json: {}, status: 204
+            if params[:knocked_pins].to_s.chars.any? {|c| c=~/[^\d]/}
+                render json: {message: "Knocked pins data format is invalid, please input a valid number."}, status: 406
+            else
+                game.throw!(update_params[:knocked_pins].to_i)
+                render json: {}, status: 204
+            end
         else
-          render json: {message: "Game not found. Please clicking on New Game before start."}, status: 404
+            render json: {message: "Game not found. Please clicking on New Game before start."}, status: 404
         end
 
         rescue GameError, AvailablePinsError => e
-        render json: {message: e.message}, status: 422
+            render json: {message: e.message}, status: 422
     end
     
-    
     private
-
     def new_game
         @new_game =  @new_game || Game.create
     end
@@ -41,12 +43,7 @@ class Api::GamesController < ApplicationController
     end
     
     def update_params
-        # binding.pry
-        if params[:knocked_pins].to_s.chars.any? {|c| c=~/[^\d]/}
-            raise(ActionController::ParameterMissing, "Wrong knocked pins data format.") 
-        end 
         params.require(:knocked_pins)
         params.permit(:knocked_pins, :id, :action, :format)
     end
-    
 end
