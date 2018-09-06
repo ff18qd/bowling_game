@@ -33,25 +33,14 @@ the score of the spare.
 For background information, please see http://en.wikipedia.org/wiki/Ten-pin_bowling
 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Run the API:
 
-Things you may want to cover:
+* fork the repo
 
-* Ruby version
+* bundle install
 
-* System dependencies
+* rake db:create db:migrate
 
-* Configuration
+* rails s
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* open browser at http://localhost:3000/
